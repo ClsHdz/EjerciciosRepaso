@@ -2,7 +2,7 @@
 import acm.program.*;
 import acm.graphics.*;
 
-public class Repaso3 extends GraphicsProgram {
+public class Repaso4 extends GraphicsProgram {
 	GRect rectangulo = new GRect(160,80);
 	int distanciaX;
 	int distanciaY;
@@ -14,7 +14,7 @@ public class Repaso3 extends GraphicsProgram {
 	public void run(){
 		distanciaX = getWidth()/2;
 		distanciaY = getHeight()/2;
-		rectangulo.setLocation(distanciaX, distanciaY);
+		rectangulo.setLocation(distanciaX - (rectangulo.getWidth()/2), distanciaY - (rectangulo.getHeight()/2));
 	}
 	
 }
