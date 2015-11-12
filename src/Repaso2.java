@@ -10,6 +10,8 @@ public class Repaso2 extends GraphicsProgram {
 		add(rectangulo);
 	}
 	public void run(){
+		distanciaX = getWidth()/2;
+		rectangulo.setLocation(distanciaX, 0);
 		
 	}
 }
