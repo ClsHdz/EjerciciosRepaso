@@ -19,8 +19,10 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 //		println(""+respuesta+"");
 //		respuesta = multiploMultiple(7);	
 //		println(""+respuesta+"");
-		respuesta = menos20(40);	
-		println(""+respuesta+"");
+//		respuesta = menos20(40);	
+//		println(""+respuesta+"");
+		solucion = loteria(2,2,0);
+		println(""+solucion+"");
 	}
 	
 	private boolean fiestaArdillas(int n ,boolean finde){
@@ -117,6 +119,24 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 		}
 		else{
 			return false;
+		}
+	}
+	private int loteria(int a, int b, int c){
+		if(a == b && b == c){
+			if(a == 2){
+				return 10;
+			}
+			else{
+				return 5;
+			}
+		}
+		else{
+			if(a != b && a != c){
+				return 1;
+			}
+			else{
+				return 0;
+			}
 		}
 	}
 }
