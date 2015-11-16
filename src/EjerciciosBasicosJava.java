@@ -9,7 +9,9 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 //		println(""+respuesta+"");
 //		solucion = multa(85,true);
 //		println(""+solucion+"");
-		respuesta = muyVanidoso(24);
+//		respuesta = muyVanidoso(24);
+//		println(""+respuesta+"");
+		respuesta = contesta(true,false,false);	
 		println(""+respuesta+"");
 	}
 	
@@ -50,5 +52,22 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 			return false;
 		}
 	}
-	
+	private boolean contesta(boolean matinal, boolean madre, boolean dormido){
+		if(dormido == true){
+			return false;
+		}
+		else{
+			if(matinal == true){
+				if(madre == true){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			else{
+				return true;
+			}
+		}
+	}
 }
