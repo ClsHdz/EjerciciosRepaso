@@ -11,7 +11,9 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 //		println(""+solucion+"");
 //		respuesta = muyVanidoso(24);
 //		println(""+respuesta+"");
-		respuesta = contesta(true,false,false);	
+//		respuesta = contesta(true,false,false);	
+//		println(""+respuesta+"");
+		respuesta = menorPor10(2,11,1);	
 		println(""+respuesta+"");
 	}
 	
@@ -68,6 +70,14 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 			else{
 				return true;
 			}
+		}
+	}
+	private boolean menorPor10(int numero, int cifra, int n){
+		if(numero - cifra >= 10 || numero - n >= 10 || n - numero >= 10 || cifra - numero >= 10 || n - cifra >= 10 || cifra - n >= 10){
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 }
