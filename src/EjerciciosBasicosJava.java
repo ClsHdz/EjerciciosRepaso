@@ -21,7 +21,9 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 //		println(""+respuesta+"");
 //		respuesta = menos20(40);	
 //		println(""+respuesta+"");
-		solucion = loteria(2,2,0);
+//		solucion = loteria(2,2,0);
+//		println(""+solucion+"");
+		solucion = withoutDoubles(6,3,true);
 		println(""+solucion+"");
 	}
 	
@@ -138,5 +140,12 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 				return 0;
 			}
 		}
+	}
+	private int withoutDoubles(int n, int i, boolean doble){
+		int j = 0;
+		if(doble == true && n == i){
+			j = 1;
+		}
+		return(n + i + j);
 	}
 }
