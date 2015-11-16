@@ -15,7 +15,9 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 //		println(""+respuesta+"");
 //		respuesta = menorPor10(2,11,1);	
 //		println(""+respuesta+"");
-		respuesta = digitoIgual(12,44);	
+//		respuesta = digitoIgual(12,44);	
+//		println(""+respuesta+"");
+		respuesta = multiploMultiple(7);	
 		println(""+respuesta+"");
 	}
 	
@@ -89,6 +91,19 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 		int num4 = cifra%10;
 		if(num1 == num3 || num1 == num4 || num2 == num3 || num2 == num4){
 			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	private boolean multiploMultiple(int n){
+		if(n % 3 == 0 || n % 5 == 0){
+			if(n % 3 == 0 && n % 5 == 0){
+				return false;
+			}
+			else{
+				return true;
+			}
 		}
 		else{
 			return false;
