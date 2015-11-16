@@ -13,7 +13,9 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 //		println(""+respuesta+"");
 //		respuesta = contesta(true,false,false);	
 //		println(""+respuesta+"");
-		respuesta = menorPor10(2,11,1);	
+//		respuesta = menorPor10(2,11,1);	
+//		println(""+respuesta+"");
+		respuesta = digitoIgual(12,44);	
 		println(""+respuesta+"");
 	}
 	
@@ -74,6 +76,18 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 	}
 	private boolean menorPor10(int numero, int cifra, int n){
 		if(numero - cifra >= 10 || numero - n >= 10 || n - numero >= 10 || cifra - numero >= 10 || n - cifra >= 10 || cifra - n >= 10){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	private boolean digitoIgual(int n, int cifra){
+		int num1 = n/10;
+		int num2 = n%10;
+		int num3 = cifra/10;
+		int num4 = cifra%10;
+		if(num1 == num3 || num1 == num4 || num2 == num3 || num2 == num4){
 			return true;
 		}
 		else{
