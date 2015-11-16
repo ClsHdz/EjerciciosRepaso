@@ -17,7 +17,9 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 //		println(""+respuesta+"");
 //		respuesta = digitoIgual(12,44);	
 //		println(""+respuesta+"");
-		respuesta = multiploMultiple(7);	
+//		respuesta = multiploMultiple(7);	
+//		println(""+respuesta+"");
+		respuesta = menos20(40);	
 		println(""+respuesta+"");
 	}
 	
@@ -104,6 +106,14 @@ public class EjerciciosBasicosJava extends ConsoleProgram{
 			else{
 				return true;
 			}
+		}
+		else{
+			return false;
+		}
+	}
+	private boolean menos20(int n){
+		if(n % 20 == 18 || n % 20 == 19){
+			return true;
 		}
 		else{
 			return false;
