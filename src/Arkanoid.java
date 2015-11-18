@@ -1,5 +1,8 @@
 import acm.program.*;
+
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+
 import acm.graphics.*;
 
 import java.awt.Color;
@@ -58,7 +61,7 @@ public class Arkanoid extends GraphicsProgram{
 			i++;
 			j = 0;
 		}
-		
+		addKeyListeners();
 		addMouseListeners();
 		plataforma.setFilled(true);
 		plataforma.setFillColor(Color.BLACK);
@@ -77,7 +80,7 @@ public class Arkanoid extends GraphicsProgram{
 			choqueDownLeft = false;
 			choqueDownRight = false;
 			if(inicio == false){
-				bola.setLocation(plataforma.getX(), plataforma.getY() - 15);
+				bola.setLocation(plataforma.getX() + (plataforma.getWidth()/2), plataforma.getY() - 15);
 			}
 			else{
 				bola.move(velocidadX, -velocidadY);
@@ -166,6 +169,11 @@ public class Arkanoid extends GraphicsProgram{
 	public void mouseClicked(MouseEvent evento){
 		inicio = true;
 	}
-	
+	public void keyPressed (KeyEvent eventos){
+		if(eventos.getKeyCode() == KeyEvent.VK_9){
+			ganador = true;
+			gameOver = true;
+		}
+	}
 	
 }
