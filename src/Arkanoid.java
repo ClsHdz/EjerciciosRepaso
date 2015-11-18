@@ -11,8 +11,13 @@ public class Arkanoid extends GraphicsProgram{
 	private static final int ALTO_PANTALLA = 900;
 	GLabel GOver;
 	GLabel ganar;
+	GLabel Modo1;
+	GLabel Modo2;
+	GLabel puntuacion;
 	GRect ladrillo;
 	GRect plataforma = new GRect(80, 30);
+	GRect botonModo1 = new GRect(80, 60);
+	GRect botonModo2 = new GRect(80, 60);
 	int longLadrillo = 60;
 	int altLadrillo = 30;
 	int columnas = 10;
@@ -21,21 +26,27 @@ public class Arkanoid extends GraphicsProgram{
 	int velocidadX = 5;
 	int velocidadY = 10;
 	int cuentaLadrillos = 0;
+	int score = 0;
 	boolean choquePlataforma = false;
 	boolean choqueLadrillo = false;
 	boolean choqueUpLeft = false;
 	boolean choqueUpRight = false;
 	boolean choqueDownLeft = false;
 	boolean choqueDownRight = false;
-	boolean gameOver = false;
+	boolean gameOver = true;
 	boolean ganador = false;
 	boolean inicio = false;
+	boolean modo = false;
+	boolean modo1 = false;
+	boolean modo2 = false;
 	public void init(){
 		setSize(ANCHO_PANTALLA, ALTO_PANTALLA);
 		int i = 0;
 		int j = 0;
 		GOver = new GLabel("Game Over");
 		ganar = new GLabel("Enhorabuena, has ganado");
+		Modo1 = new GLabel("Modo Normal");
+		Modo2 = new GLabel("Modo Difícil");
 		while(i < filas){
 			while(j < columnas){
 				ladrillo = new GRect(longLadrillo,altLadrillo);
@@ -68,10 +79,24 @@ public class Arkanoid extends GraphicsProgram{
 		add(plataforma,0,700);
 		bola.setFilled(true);
 		bola.setFillColor(Color.CYAN);
-		add(bola, 600, 0);
+		
+		add(botonModo1, ANCHO_PANTALLA/2, ALTO_PANTALLA/2);
+		add(botonModo2, botonModo1.getX() - 80, botonModo1.getY());
+		add(Modo1, botonModo1.getX(), botonModo1.getY());
+		add(Modo2, botonModo2.getX(), botonModo2.getY());
 	}
-	
+
 	public void run(){
+		while(modo == false){
+		}
+		if(modo1 == true){
+			add(bola, 600, 0);
+		}
+		remove(botonModo1);
+		remove(botonModo2);
+		remove(Modo1);
+		remove(Modo2);
+		gameOver = false;
 		while(gameOver == false){
 			choquePlataforma = false;
 			choqueLadrillo = false;
@@ -80,7 +105,7 @@ public class Arkanoid extends GraphicsProgram{
 			choqueDownLeft = false;
 			choqueDownRight = false;
 			if(inicio == false){
-				bola.setLocation(plataforma.getX() + (plataforma.getWidth()/2), plataforma.getY() - 15);
+				bola.setLocation(plataforma.getX(), plataforma.getY() - 15);
 			}
 			else{
 				bola.move(velocidadX, -velocidadY);
@@ -100,6 +125,7 @@ public class Arkanoid extends GraphicsProgram{
 				remove(choque);
 				velocidadY = velocidadY * (-1);
 				cuentaLadrillos++;
+				score = score + 100;
 				choqueUpLeft = true;
 				choqueLadrillo = true;
 			}
@@ -114,20 +140,22 @@ public class Arkanoid extends GraphicsProgram{
 					remove(choque);
 					velocidadY = velocidadY * (-1);
 					cuentaLadrillos++;
+					score = score + 100;
 					choqueDownLeft = true;
 					choqueLadrillo = true;
 				}
 			}
 			choque = getElementAt(posX + bola.getWidth(),posY);
-			
+
 			if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
 				remove(choque);
 				velocidadY = velocidadY * (-1);
 				cuentaLadrillos++;
+				score = score + 100;
 				choqueUpRight = true;
 				choqueLadrillo = true;
 			}
-			
+
 			choque = getElementAt(posX + bola.getWidth(),posY + bola.getHeight());
 			if(choque == plataforma && choquePlataforma == false){
 				velocidadY = velocidadY * (-1);
@@ -139,6 +167,7 @@ public class Arkanoid extends GraphicsProgram{
 					remove(choque);
 					velocidadY = velocidadY * (-1);
 					cuentaLadrillos++;
+					score = score + 100;
 					choqueDownRight = true;
 					choqueLadrillo = true;
 				}
@@ -157,8 +186,12 @@ public class Arkanoid extends GraphicsProgram{
 		GOver.setLocation(ANCHO_PANTALLA / 2,ALTO_PANTALLA / 2);
 		GOver.setColor(Color.BLACK);
 		add(GOver);
+		puntuacion = new GLabel("Tu puntuacion es "+score+"");
+		puntuacion.setLocation(ANCHO_PANTALLA / 2,ALTO_PANTALLA / 2 + 30);
+		puntuacion.setColor(Color.BLACK);
+		add(puntuacion);
 		if(ganador == true){
-			ganar.setLocation(ANCHO_PANTALLA / 2,ALTO_PANTALLA / 2 + 30);
+			ganar.setLocation(ANCHO_PANTALLA / 2,ALTO_PANTALLA / 2 + 60);
 			ganar.setColor(Color.BLACK);
 			add(ganar);
 		}
@@ -167,7 +200,19 @@ public class Arkanoid extends GraphicsProgram{
 		plataforma.setLocation(evento.getX(), 700);
 	}
 	public void mouseClicked(MouseEvent evento){
-		inicio = true;
+		if(gameOver == false){
+			inicio = true;
+		}
+		else{
+			if(getElementAt(evento.getX(), evento.getY()) == botonModo1){
+				modo1 = true;
+				modo = true;
+			}
+			if(getElementAt(evento.getX(), evento.getY()) == botonModo2){
+				modo2 = true;
+				modo = true;
+			}
+		}
 	}
 	public void keyPressed (KeyEvent eventos){
 		if(eventos.getKeyCode() == KeyEvent.VK_9){
@@ -175,5 +220,5 @@ public class Arkanoid extends GraphicsProgram{
 			gameOver = true;
 		}
 	}
-	
+
 }
