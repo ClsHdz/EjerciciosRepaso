@@ -9,15 +9,14 @@ public class Arkanoid extends GraphicsProgram{
 	GLabel GOver;
 	GLabel ganar;
 	GRect ladrillo;
-	GRect vacio;
 	GRect plataforma = new GRect(80, 30);
 	int longLadrillo = 60;
 	int altLadrillo = 30;
 	int columnas = 10;
 	int filas = 5;
 	GOval bola = new GOval(15,15);
-	int velocidadX = 7;
-	int velocidadY = 14;
+	int velocidadX = 5;
+	int velocidadY = 10;
 	int cuentaLadrillos = 0;
 	boolean choquePlataforma = false;
 	boolean choqueLadrillo = false;
@@ -27,13 +26,13 @@ public class Arkanoid extends GraphicsProgram{
 	boolean choqueDownRight = false;
 	boolean gameOver = false;
 	boolean ganador = false;
+	boolean inicio = false;
 	public void init(){
 		setSize(ANCHO_PANTALLA, ALTO_PANTALLA);
 		int i = 0;
 		int j = 0;
 		GOver = new GLabel("Game Over");
 		ganar = new GLabel("Enhorabuena, has ganado");
-		vacio = new GRect(longLadrillo,altLadrillo);
 		while(i < filas){
 			while(j < columnas){
 				ladrillo = new GRect(longLadrillo,altLadrillo);
@@ -66,7 +65,7 @@ public class Arkanoid extends GraphicsProgram{
 		add(plataforma,0,700);
 		bola.setFilled(true);
 		bola.setFillColor(Color.CYAN);
-		add(bola,100,685);
+		add(bola, 600, 0);
 	}
 	
 	public void run(){
@@ -77,7 +76,12 @@ public class Arkanoid extends GraphicsProgram{
 			choqueUpRight = false;
 			choqueDownLeft = false;
 			choqueDownRight = false;
-			bola.move(velocidadX, -velocidadY);
+			if(inicio == false){
+				bola.setLocation(plataforma.getX(), plataforma.getY() - 15);
+			}
+			else{
+				bola.move(velocidadX, -velocidadY);
+			}
 			pause(30);
 			if(bola.getX() + 25 > ANCHO_PANTALLA){
 				velocidadX = velocidadX * -1;
@@ -158,6 +162,9 @@ public class Arkanoid extends GraphicsProgram{
 	}
 	public void mouseMoved(MouseEvent evento){
 		plataforma.setLocation(evento.getX(), 700);
+	}
+	public void mouseClicked(MouseEvent evento){
+		inicio = true;
 	}
 	
 	
