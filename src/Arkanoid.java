@@ -26,8 +26,8 @@ public class Arkanoid extends GraphicsProgram{
 	int columnas = 10;
 	int filas = 5;
 	GOval bola = new GOval(15,15);
-	int velocidadX = 5;
-	int velocidadY = 10;
+	int velocidadX = 4;
+	int velocidadY = 8;
 	int cuentaLadrillos = 0;
 	int score = 0;
 	int n;
@@ -75,11 +75,22 @@ public class Arkanoid extends GraphicsProgram{
 					ladrillo.setFillColor(Color.BLUE);
 				}
 				add(ladrillo,longLadrillo * j,altLadrillo * i + 50);
-				if(i == filas / 2 && j == columnas /2){
+				if(i == filas /2 && j == columnas /2){
 					dobleLadrillo.setFillColor(Color.GRAY);
 					add(dobleLadrillo, longLadrillo * j, altLadrillo * i +50);
 				}
-				
+				if(i == (filas /2) -1 && j == (columnas /2)){
+					dobleLadrillo.setFillColor(Color.GRAY);
+					add(dobleLadrillo, longLadrillo * j, altLadrillo * i +50);
+				}
+				if(i == (filas /2) -1 && j == (columnas /2)-1){
+					dobleLadrillo.setFillColor(Color.GRAY);
+					add(dobleLadrillo, longLadrillo * j, altLadrillo * i +50);
+				}
+				if(i == (filas /2) && j == (columnas /2) -1){
+					dobleLadrillo.setFillColor(Color.GRAY);
+					add(dobleLadrillo, longLadrillo * j, altLadrillo * i +50);
+				}
 				j++;
 			}
 			i++;
@@ -115,6 +126,7 @@ public class Arkanoid extends GraphicsProgram{
 			puntJuego = new GLabel(""+score+"");
 			puntJuego.setLocation(0, 800);
 			add(puntJuego);
+			choqueDoble = false;
 			choquePlataforma = false;
 			choqueLadrillo = false;
 			choqueUpLeft = false;
@@ -133,24 +145,17 @@ public class Arkanoid extends GraphicsProgram{
 			}
 			if(bola.getX() < 0){
 				velocidadX = velocidadX * -1;
-			}
+			} 
 			GObject choque = null;
 			double posX = bola.getX();
 			double posY = bola.getY();
 			choque = getElementAt(posX,posY);
 			if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
-				if(choque == dobleLadrillo){
-					remove(choque);
-					score = score + 50;
-					choqueDoble = true;
-				}
-				else{
-					if(choqueDoble == false){
-						remove(choque);
-						cuentaLadrillos++;
-						score = score + 100;
-					}
-				}
+				remove(choque);
+				cuentaLadrillos++;
+				score = score + 100;
+					
+				
 				choqueUpLeft = true;
 				velocidadY = velocidadY * -1;
 				choqueLadrillo = true;
@@ -163,18 +168,9 @@ public class Arkanoid extends GraphicsProgram{
 			}
 			else{
 				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
-					if(choque == dobleLadrillo){
-						remove(choque);
-						score = score + 50;
-						choqueDoble = true;
-					}
-					else{
-						if(choqueDoble == false){
-							remove(choque);
-							cuentaLadrillos++;
-							score = score + 100;
-						}
-					}
+					remove(choque);
+					cuentaLadrillos++;
+					score = score + 100;
 					choqueDownLeft = true;
 					velocidadY = velocidadY * -1;
 					choqueLadrillo = true;
@@ -183,18 +179,9 @@ public class Arkanoid extends GraphicsProgram{
 			choque = getElementAt(posX + bola.getWidth(),posY);
 
 			if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
-				if(choque == dobleLadrillo){
-					remove(choque);
-					score = score + 50;
-					choqueDoble = true;
-				}
-				else{
-					if(choqueDoble == false){
-						remove(choque);
-						cuentaLadrillos++;
-						score = score + 100;
-					}
-				}
+				remove(choque);
+				cuentaLadrillos++;
+				score = score + 100;
 				choqueUpRight = true;
 				velocidadY = velocidadY * -1;
 				choqueLadrillo = true;
@@ -208,18 +195,9 @@ public class Arkanoid extends GraphicsProgram{
 			}
 			else{
 				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
-					if(choque == dobleLadrillo){
-						remove(choque);
-						score = score + 50;
-						choqueDoble = true;
-					}
-					else{
-						if(choqueDoble == false){
-							remove(choque);
-							cuentaLadrillos++;
-							score = score + 100;
-						}
-					}
+					remove(choque);
+					cuentaLadrillos++;
+					score = score + 100;
 					choqueDownRight = true;
 					velocidadY = velocidadY * -1;
 					choqueLadrillo = true;
@@ -231,7 +209,7 @@ public class Arkanoid extends GraphicsProgram{
 			if(bola.getY() + 15 > ALTO_PANTALLA){
 				gameOver = true;
 			}
-			if(cuentaLadrillos == 50){
+			if(cuentaLadrillos == 54){
 				gameOver = true;
 				ganador = true;
 			}
