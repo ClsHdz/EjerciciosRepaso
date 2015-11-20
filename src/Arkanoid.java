@@ -1,4 +1,5 @@
 import acm.program.*;
+import acm.util.RandomGenerator;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -15,6 +16,7 @@ public class Arkanoid extends GraphicsProgram{
 	GLabel Modo2;
 	GLabel puntuacion;
 	GLabel puntJuego;
+	GRect dobleLadrillo;
 	GRect ladrillo;
 	GRect plataforma = new GRect(80, 30);
 	GRect botonModo1 = new GRect(80, 60);
@@ -28,6 +30,8 @@ public class Arkanoid extends GraphicsProgram{
 	int velocidadY = 10;
 	int cuentaLadrillos = 0;
 	int score = 0;
+	int n;
+	boolean choqueDoble = false;
 	boolean choquePlataforma = false;
 	boolean choqueLadrillo = false;
 	boolean ladrilloRoto = false;
@@ -51,6 +55,8 @@ public class Arkanoid extends GraphicsProgram{
 		Modo2 = new GLabel("Modo Difícil");
 		while(i < filas){
 			while(j < columnas){
+				dobleLadrillo = new GRect(longLadrillo,altLadrillo);
+				dobleLadrillo.setFilled(true);
 				ladrillo = new GRect(longLadrillo,altLadrillo);
 				ladrillo.setFilled(true);
 				if(i == 0){
@@ -69,6 +75,11 @@ public class Arkanoid extends GraphicsProgram{
 					ladrillo.setFillColor(Color.BLUE);
 				}
 				add(ladrillo,longLadrillo * j,altLadrillo * i + 50);
+				if(i == filas / 2 && j == columnas /2){
+					dobleLadrillo.setFillColor(Color.GRAY);
+					add(dobleLadrillo, longLadrillo * j, altLadrillo * i +50);
+				}
+				
 				j++;
 			}
 			i++;
@@ -81,7 +92,6 @@ public class Arkanoid extends GraphicsProgram{
 		add(plataforma,0,700);
 		bola.setFilled(true);
 		bola.setFillColor(Color.CYAN);
-		
 		add(botonModo1, ANCHO_PANTALLA/2, ALTO_PANTALLA/2);
 		add(botonModo2, botonModo1.getX() - 80, botonModo1.getY());
 		add(Modo1, botonModo1.getX(), botonModo1.getY());
@@ -100,6 +110,8 @@ public class Arkanoid extends GraphicsProgram{
 		remove(Modo2);
 		gameOver = false;
 		while(gameOver == false){
+			RandomGenerator aleatorio = new RandomGenerator();
+			n = aleatorio.nextInt(100);
 			puntJuego = new GLabel(""+score+"");
 			puntJuego.setLocation(0, 800);
 			add(puntJuego);
@@ -127,12 +139,21 @@ public class Arkanoid extends GraphicsProgram{
 			double posY = bola.getY();
 			choque = getElementAt(posX,posY);
 			if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
-				remove(choque);
+				if(choque == dobleLadrillo){
+					remove(choque);
+					score = score + 50;
+					choqueDoble = true;
+				}
+				else{
+					if(choqueDoble == false){
+						remove(choque);
+						cuentaLadrillos++;
+						score = score + 100;
+					}
+				}
 				choqueUpLeft = true;
 				velocidadY = velocidadY * -1;
 				choqueLadrillo = true;
-				cuentaLadrillos++;
-				score = score + 100;
 			}
 			choque = getElementAt(posX,posY + bola.getHeight());
 			if(choque == plataforma && choquePlataforma == false){
@@ -142,23 +163,41 @@ public class Arkanoid extends GraphicsProgram{
 			}
 			else{
 				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
-					remove(choque);
+					if(choque == dobleLadrillo){
+						remove(choque);
+						score = score + 50;
+						choqueDoble = true;
+					}
+					else{
+						if(choqueDoble == false){
+							remove(choque);
+							cuentaLadrillos++;
+							score = score + 100;
+						}
+					}
 					choqueDownLeft = true;
 					velocidadY = velocidadY * -1;
 					choqueLadrillo = true;
-					cuentaLadrillos++;
-					score = score + 100;
 				}
 			}
 			choque = getElementAt(posX + bola.getWidth(),posY);
 
 			if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
-				remove(choque);
+				if(choque == dobleLadrillo){
+					remove(choque);
+					score = score + 50;
+					choqueDoble = true;
+				}
+				else{
+					if(choqueDoble == false){
+						remove(choque);
+						cuentaLadrillos++;
+						score = score + 100;
+					}
+				}
 				choqueUpRight = true;
 				velocidadY = velocidadY * -1;
 				choqueLadrillo = true;
-				cuentaLadrillos++;
-				score = score + 100;
 			}
 
 			choque = getElementAt(posX + bola.getWidth(),posY + bola.getHeight());
@@ -169,12 +208,21 @@ public class Arkanoid extends GraphicsProgram{
 			}
 			else{
 				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
-					remove(choque);
+					if(choque == dobleLadrillo){
+						remove(choque);
+						score = score + 50;
+						choqueDoble = true;
+					}
+					else{
+						if(choqueDoble == false){
+							remove(choque);
+							cuentaLadrillos++;
+							score = score + 100;
+						}
+					}
 					choqueDownRight = true;
 					velocidadY = velocidadY * -1;
 					choqueLadrillo = true;
-					cuentaLadrillos++;
-					score = score + 100;
 				}
 			}
 			if(bola.getY() < 0){
@@ -188,6 +236,9 @@ public class Arkanoid extends GraphicsProgram{
 				ganador = true;
 			}
 			remove(puntJuego);
+		}
+		if(modo1 == false){
+			add(bola);
 		}
 		GOver.setLocation(ANCHO_PANTALLA / 2,ALTO_PANTALLA / 2);
 		GOver.setColor(Color.BLACK);
@@ -225,6 +276,7 @@ public class Arkanoid extends GraphicsProgram{
 			ganador = true;
 			gameOver = true;
 		}
+
 	}
 
 }
