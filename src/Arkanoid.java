@@ -16,6 +16,7 @@ public class Arkanoid extends GraphicsProgram{
 	GLabel Modo2;
 	GLabel puntuacion;
 	GLabel puntJuego;
+	GRect powerUp = new GRect(20, 10);
 	GRect dobleLadrillo;
 	GRect ladrillo;
 	GRect plataforma = new GRect(80, 30);
@@ -28,6 +29,7 @@ public class Arkanoid extends GraphicsProgram{
 	GOval bola = new GOval(15,15);
 	int velocidadX = 4;
 	int velocidadY = 8;
+	int velocidadPU = 5;
 	int cuentaLadrillos = 0;
 	int score = 0;
 	int n;
@@ -133,6 +135,10 @@ public class Arkanoid extends GraphicsProgram{
 			choqueUpRight = false;
 			choqueDownLeft = false;
 			choqueDownRight = false;
+			powerUp.move(0, velocidadPU);
+			if(powerUp.getY() > ALTO_PANTALLA){
+				remove(powerUp);
+			}
 			if(inicio == false){
 				bola.setLocation(plataforma.getX(), plataforma.getY() - 15);
 			}
@@ -154,11 +160,14 @@ public class Arkanoid extends GraphicsProgram{
 				remove(choque);
 				cuentaLadrillos++;
 				score = score + 100;
-					
-				
 				choqueUpLeft = true;
 				velocidadY = velocidadY * -1;
 				choqueLadrillo = true;
+				if(n < 50){
+					if(n < 40){
+						add(powerUp, choque.getX(), choque.getY());
+					}
+				}
 			}
 			choque = getElementAt(posX,posY + bola.getHeight());
 			if(choque == plataforma && choquePlataforma == false){
@@ -174,6 +183,11 @@ public class Arkanoid extends GraphicsProgram{
 					choqueDownLeft = true;
 					velocidadY = velocidadY * -1;
 					choqueLadrillo = true;
+					if(n < 50){
+						if(n < 40){
+							add(powerUp, choque.getX(), choque.getY());
+						}
+					}
 				}
 			}
 			choque = getElementAt(posX + bola.getWidth(),posY);
@@ -185,6 +199,11 @@ public class Arkanoid extends GraphicsProgram{
 				choqueUpRight = true;
 				velocidadY = velocidadY * -1;
 				choqueLadrillo = true;
+				if(n < 50){
+					if(n < 40){
+						add(powerUp, choque.getX(), choque.getY());
+					}
+				}
 			}
 
 			choque = getElementAt(posX + bola.getWidth(),posY + bola.getHeight());
@@ -201,6 +220,11 @@ public class Arkanoid extends GraphicsProgram{
 					choqueDownRight = true;
 					velocidadY = velocidadY * -1;
 					choqueLadrillo = true;
+					if(n < 50){
+						if(n < 40){
+							add(powerUp, choque.getX(), choque.getY());
+						}
+					}
 				}
 			}
 			if(bola.getY() < 0){
