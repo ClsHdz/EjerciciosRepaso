@@ -26,8 +26,8 @@ public class Arkanoid extends GraphicsProgram{
 	int columnas = 10;
 	int filas = 5;
 	GOval bola = new GOval(15,15);
-	int velocidadX = 4;
-	int velocidadY = 8;
+	int velocidadX = 5;
+	int velocidadY = 10;
 	int cuentaLadrillos = 0;
 	int score = 0;
 	int n;
@@ -52,7 +52,7 @@ public class Arkanoid extends GraphicsProgram{
 		GOver = new GLabel("Game Over");
 		ganar = new GLabel("Enhorabuena, has ganado");
 		Modo1 = new GLabel("Modo Normal");
-		Modo2 = new GLabel("Modo Difícil");
+		Modo2 = new GLabel("Modo Invisible");
 		while(i < filas){
 			while(j < columnas){
 				dobleLadrillo = new GRect(longLadrillo,altLadrillo);
