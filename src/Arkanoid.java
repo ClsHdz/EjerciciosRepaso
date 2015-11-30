@@ -16,8 +16,6 @@ public class Arkanoid extends GraphicsProgram{
 	GLabel Modo2;
 	GLabel puntuacion;
 	GLabel puntJuego;
-	GRect laser = new GRect(10,50);
-	GRect powerUp = new GRect(80, 10);
 	GRect dobleLadrillo;
 	GRect ladrillo;
 	GRect plataforma = new GRect(80, 30);
@@ -30,11 +28,9 @@ public class Arkanoid extends GraphicsProgram{
 	GOval bola = new GOval(15,15);
 	int velocidadX = 4;
 	int velocidadY = 8;
-	int velocidadPU = 5;
 	int cuentaLadrillos = 0;
 	int score = 0;
 	int n;
-	boolean laserPU = false;
 	boolean choqueDoble = false;
 	boolean choquePlataforma = false;
 	boolean choqueLadrillo = false;
@@ -143,10 +139,6 @@ public class Arkanoid extends GraphicsProgram{
 			choqueUpRight = false;
 			choqueDownLeft = false;
 			choqueDownRight = false;
-			powerUp.move(0, velocidadPU);
-			if(powerUp.getY() > ALTO_PANTALLA){
-				remove(powerUp);
-			}
 			if(inicio == false){
 				bola.setLocation(plataforma.getX(), plataforma.getY() - 15);
 			}
@@ -160,28 +152,18 @@ public class Arkanoid extends GraphicsProgram{
 			if(bola.getX() < 0){
 				velocidadX = velocidadX * -1;
 			} 
-			GObject cogePU = null;
-			cogePU = getElementAt(plataforma.getX(),plataforma.getY());
-			if(cogePU != null && cogePU != bola && cogePU != plataforma ){
-				remove(cogePU);
-				laserPU = true;
-			}
 			GObject choque = null;
 			double posX = bola.getX();
 			double posY = bola.getY();
 			choque = getElementAt(posX,posY);
-			if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false && choque != powerUp){
+			if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
 				remove(choque);
 				cuentaLadrillos++;
 				score = score + 100;
 				choqueUpLeft = true;
 				velocidadY = velocidadY * -1;
 				choqueLadrillo = true;
-				if(n < 50){
-					if(n < 10){
-						add(powerUp, choque.getX(), choque.getY());
-					}
-				}
+				
 			}
 			choque = getElementAt(posX,posY + bola.getHeight());
 			if(choque == plataforma && choquePlataforma == false){
@@ -190,34 +172,25 @@ public class Arkanoid extends GraphicsProgram{
 				choquePlataforma = true;
 			}
 			else{
-				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false && choque != powerUp){
+				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
 					remove(choque);
 					cuentaLadrillos++;
 					score = score + 100;
 					choqueDownLeft = true;
 					velocidadY = velocidadY * -1;
 					choqueLadrillo = true;
-					if(n < 50){
-						if(n < 40){
-							add(powerUp, choque.getX(), choque.getY());
-						}
-					}
+					
 				}
 			}
 			choque = getElementAt(posX + bola.getWidth(),posY);
-
-			if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false && choque != powerUp){
+			if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
 				remove(choque);
 				cuentaLadrillos++;
 				score = score + 100;
 				choqueUpRight = true;
 				velocidadY = velocidadY * -1;
 				choqueLadrillo = true;
-				if(n < 50){
-					if(n < 40){
-						add(powerUp, choque.getX(), choque.getY());
-					}
-				}
+				
 			}
 
 			choque = getElementAt(posX + bola.getWidth(),posY + bola.getHeight());
@@ -227,18 +200,14 @@ public class Arkanoid extends GraphicsProgram{
 				choquePlataforma = true;
 			}
 			else{
-				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false && choque != powerUp){
+				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
 					remove(choque);
 					cuentaLadrillos++;
 					score = score + 100;
 					choqueDownRight = true;
 					velocidadY = velocidadY * -1;
 					choqueLadrillo = true;
-					if(n < 50){
-						if(n < 40){
-							add(powerUp, choque.getX(), choque.getY());
-						}
-					}
+					
 				}
 			}
 			if(bola.getY() < 0){
@@ -266,6 +235,7 @@ public class Arkanoid extends GraphicsProgram{
 				ganador = true;
 			}
 			remove(puntJuego);
+			
 		}
 		if(modo1 == false){
 			add(bola);
@@ -290,18 +260,13 @@ public class Arkanoid extends GraphicsProgram{
 		if(gameOver == false){
 			inicio = true;
 		}
-		else{
-			if(getElementAt(evento.getX(), evento.getY()) == botonModo1){
-				modo1 = true;
-				modo = true;
-			}
-			if(getElementAt(evento.getX(), evento.getY()) == botonModo2){
-				modo2 = true;
-				modo = true;
-			}
+		if(getElementAt(evento.getX(),evento.getY()) == botonModo1){
+			modo1 = true;
+			modo = true;
 		}
-		if(inicio == true && laserPU == true){
-			add(laser, plataforma.getX() + (plataforma.getWidth()/2) - laser.getWidth(), plataforma.getY());
+		if(getElementAt(evento.getX(),evento.getY()) == botonModo2){
+			modo2 = true;
+			modo = true;
 		}
 	}
 	public void keyPressed (KeyEvent eventos){

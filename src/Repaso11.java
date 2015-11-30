@@ -3,7 +3,7 @@ import acm.util.RandomGenerator;
 import acm.graphics.*;
 
 import java.awt.event.MouseEvent;
-public class Repaso10 extends GraphicsProgram {
+public class Repaso11 extends GraphicsProgram {
 	GRect rectangulo;
 	RandomGenerator aleatorio = new RandomGenerator();
 	int distanciaX;
