@@ -169,7 +169,7 @@ public class Arkanoid extends GraphicsProgram{
 					cuentaLadrillos++;
 					score = score + 100;
 					choqueUpLeft = true;
-					if(posX >= choque.getX() + ladrillo.getWidth() -1 && posY >= choque.getY() +1 && posY <= choque.getY() + choque.getHeight() -1){
+					if(posX >= choque.getX() + ladrillo.getWidth() -1 && posY >= choque.getY() +2 && posY <= choque.getY() + choque.getHeight() -2){
 						velocidadX = velocidadX * -1;
 					}
 					else{
@@ -190,7 +190,7 @@ public class Arkanoid extends GraphicsProgram{
 						cuentaLadrillos++;
 						score = score + 100;
 						choqueDownLeft = true;
-						if(posX >= choque.getX() + ladrillo.getWidth() -1 && posY >= choque.getY() +1 && posY <= choque.getY() + choque.getHeight() -1){
+						if(posX >= choque.getX() + ladrillo.getWidth() -1 && posY >= choque.getY() +2 && posY <= choque.getY() + choque.getHeight() -2){
 							velocidadX = velocidadX * -1;
 						}
 						else{
@@ -206,7 +206,7 @@ public class Arkanoid extends GraphicsProgram{
 					cuentaLadrillos++;
 					score = score + 100;
 					choqueUpRight = true;
-					if(posX <= choque.getX() + 1 && posY >= choque.getY() +1 && posY <= choque.getY() + choque.getHeight() -1){
+					if(posX <= choque.getX() + 1 && posY >= choque.getY() +2 && posY <= choque.getY() + choque.getHeight() -2){
 						velocidadX = velocidadX * -1;
 					}
 					else{
@@ -228,7 +228,7 @@ public class Arkanoid extends GraphicsProgram{
 						cuentaLadrillos++;
 						score = score + 100;
 						choqueDownRight = true;
-						if(posX <= choque.getX() + 1 && posY >= choque.getY() +1 && posY <= choque.getY() + choque.getHeight() -1){
+						if(posX <= choque.getX() + 1 && posY >= choque.getY() +2 && posY <= choque.getY() + choque.getHeight() -2){
 							velocidadX = velocidadX * -1;
 						}
 						else{
@@ -307,6 +307,11 @@ public class Arkanoid extends GraphicsProgram{
 		if(eventos.getKeyCode() == KeyEvent.VK_9){
 			ganador = true;
 			gameOver = true;
+			pausa = true;
+			score = 5400;
+		}
+		if(eventos.getKeyCode() == KeyEvent.VK_P){
+			score = score +100;
 		}
 		if(eventos.getKeyCode() == KeyEvent.VK_SPACE){
 			pausa = true;
