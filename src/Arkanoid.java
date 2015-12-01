@@ -148,7 +148,7 @@ public class Arkanoid extends GraphicsProgram{
 				choqueDownLeft = false;
 				choqueDownRight = false;
 				if(inicio == false){
-					bola.setLocation(plataforma.getX(), plataforma.getY() - 15);
+					bola.setLocation(plataforma.getX() + (plataforma.getWidth()/2) - 7, plataforma.getY() - 15);
 				}
 				else{
 					bola.move(velocidadX, -velocidadY);
