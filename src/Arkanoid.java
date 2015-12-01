@@ -121,11 +121,17 @@ public class Arkanoid extends GraphicsProgram{
 		remove(Modo2);
 		gameOver = false;
 		while(gameOver == false){
-			if(velocidadX > 5){
-				velocidadX = 5;
+			if(velocidadX > 6){
+				velocidadX = 6;
 			}
-			if(velocidadY > 10){
-				velocidadY = 10;
+			if(velocidadX < -6){
+				velocidadX = -6;
+			}
+			if(velocidadY > 12){
+				velocidadY = 12;
+			}
+			if(velocidadY < -12){
+				velocidadY = -12;
 			}
 			RandomGenerator aleatorio = new RandomGenerator();
 			n = aleatorio.nextInt(100);
@@ -161,7 +167,12 @@ public class Arkanoid extends GraphicsProgram{
 				cuentaLadrillos++;
 				score = score + 100;
 				choqueUpLeft = true;
-				velocidadY = velocidadY * -1;
+				if(posX >= choque.getX() + ladrillo.getWidth() -2 && posY >= choque.getY()){
+					velocidadX = velocidadX * -1;
+				}
+				else{
+					velocidadY = velocidadY * -1;
+				}
 				choqueLadrillo = true;
 				
 			}
@@ -177,7 +188,12 @@ public class Arkanoid extends GraphicsProgram{
 					cuentaLadrillos++;
 					score = score + 100;
 					choqueDownLeft = true;
-					velocidadY = velocidadY * -1;
+					if(posX >= choque.getX() + ladrillo.getWidth() -2 && posY >= choque.getY()){
+						velocidadX = velocidadX * -1;
+					}
+					else{
+						velocidadY = velocidadY * -1;
+					}
 					choqueLadrillo = true;
 					
 				}
@@ -188,7 +204,12 @@ public class Arkanoid extends GraphicsProgram{
 				cuentaLadrillos++;
 				score = score + 100;
 				choqueUpRight = true;
-				velocidadY = velocidadY * -1;
+				if(posX <= choque.getX() + 2 && posY >= choque.getY()){
+					velocidadX = velocidadX * -1;
+				}
+				else{
+					velocidadY = velocidadY * -1;
+				}
 				choqueLadrillo = true;
 				
 			}
@@ -205,7 +226,12 @@ public class Arkanoid extends GraphicsProgram{
 					cuentaLadrillos++;
 					score = score + 100;
 					choqueDownRight = true;
-					velocidadY = velocidadY * -1;
+					if(posX <= choque.getX() + 2 && posY >= choque.getY()){
+						velocidadX = velocidadX * -1;
+					}
+					else{
+						velocidadY = velocidadY * -1;
+					}
 					choqueLadrillo = true;
 					
 				}
