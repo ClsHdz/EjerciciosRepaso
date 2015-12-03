@@ -8,7 +8,7 @@ import acm.graphics.*;
 
 import java.awt.Color;
 public class Arkanoid extends GraphicsProgram{
-	private static final int ANCHO_PANTALLA = 615;
+	private static final int ANCHO_PANTALLA = 675;
 	private static final int ALTO_PANTALLA = 900;
 	GLabel GOver;
 	GLabel ganar;
@@ -24,12 +24,13 @@ public class Arkanoid extends GraphicsProgram{
 	int e [][] = {{1,1,1},{1,1,1},{1,1,1}};
 	int longLadrillo = 60;
 	int altLadrillo = 30;
-	int columnas = 10;
-	int filas = 10;
+	int columnas = 11;
+	int filas = 15;
 	GOval bola = new GOval(15,15);
 	int velocidadX = 5;
 	int velocidadY = 10;
 	int cuentaLadrillos = 0;
+	int ladrillosNivel = 0;
 	int score = 0;
 	int n;
 	int level = 1;
@@ -51,34 +52,98 @@ public class Arkanoid extends GraphicsProgram{
 	boolean modo2 = false;
 	boolean nivelTerminado = false;
 	int nivel1 [][] = {
-			{1,1,1,1,1,1,1,1,1,1},
-			{2,2,2,2,9,9,2,2,2,2},
-			{3,3,3,3,9,9,3,3,3,3},
-			{4,4,4,4,4,4,4,4,4,4},
-			{4,4,4,4,4,4,4,4,4,4},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0}
+			{1,1,1,1,1,1,1,1,1,1,1},							//61 ladrillos
+			{2,2,2,2,9,9,9,2,2,2,2},
+			{3,3,3,3,9,9,9,3,3,3,3},
+			{4,4,4,4,4,4,4,4,4,4,4},
+			{5,5,5,5,5,5,5,5,5,5,5},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0}
 			};
+	int ladrillos1 = 61;
 	int nivel2 [][] = {
-			{1,0,0,0,0,0,0,0,0,0},
-			{2,2,0,0,0,0,0,0,0,0},
-			{3,3,3,0,0,0,0,0,0,0},
-			{4,4,4,4,0,0,0,0,0,0},
-			{4,4,4,4,4,0,0,0,0,0},
-			{3,3,3,3,3,3,0,0,0,0},
-			{2,2,2,2,2,2,2,0,0,0},
-			{1,1,1,1,1,1,1,1,0,0},
-			{9,9,9,9,9,9,9,9,9,4},
-			{0,0,0,0,0,0,0,0,0,0}
+			{1,0,0,0,0,0,0,0,0,0,0},							//66 ladrillos
+			{2,2,0,0,0,0,0,0,0,0,0},
+			{3,3,3,0,0,0,0,0,0,0,0},
+			{4,4,4,4,0,0,0,0,0,0,0},
+			{4,4,4,4,4,0,0,0,0,0,0},
+			{3,3,3,3,3,3,0,0,0,0,0},
+			{2,2,2,2,2,2,2,0,0,0,0},
+			{1,1,1,1,1,1,1,1,0,0,0},
+			{1,1,1,1,1,1,1,1,1,0,0},
+			{9,9,9,9,9,9,9,9,9,9,4},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0}
 			};
+	int ladrillos2 = 66;
+	int nivel3 [][] = {
+			{3,3,3,3,3,3,3,3,3,3,3},							//118 ladrillos
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{5,5,5,9,9,9,9,9,9,9,9},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{1,1,1,1,1,1,1,1,1,1,1},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{9,9,9,9,9,9,9,9,5,5,5},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{2,2,2,2,2,2,2,2,2,2,2},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{4,4,4,9,9,9,9,9,9,9,9},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{4,4,4,4,4,4,4,4,4,4,4},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{9,9,9,9,9,9,9,9,4,4,4}
+			};
+	int ladrillos3 = 118;
+	int nivel4 [][] = {
+			{0,0,0,0,0, 0 ,0,0,0,0,0},							//126 ladrillos
+			{0,9,2,3,6, 0 ,2,3,4,9,0},
+			{0,4,3,2,1, 0 ,3,2,9,4,0},
+			{0,3,6,1,2, 0 ,4,9,2,3,0},
+			{0,2,1,6,3, 0 ,9,4,3,2,0},
+			{0,1,2,3,4, 0 ,2,3,6,1,0},
+			{0,6,3,2,9, 0 ,3,2,1,6,0},
+			{0,3,4,9,2, 0 ,6,1,2,3,0},
+			{0,2,9,4,3, 0 ,1,6,3,2,0},
+			{0,9,2,3,6, 0 ,2,3,4,9,0},
+			{0,4,3,2,1, 0 ,3,2,9,4,0},
+			{0,3,6,1,2, 0 ,4,9,2,3,0},
+			{0,2,1,6,3, 0 ,9,4,3,2,0},
+			{0,1,2,3,4, 0 ,2,3,6,1,0},
+			{0,6,3,2,9, 0 ,3,2,1,6,0}
+			};
+	int ladrillos4 = 126;
+	int nivel5 [][] = {
+			{0,0,0,2,0,0,0,2,0,0,0},							//224 ladrillos
+			{0,0,0,0,2,0,2,0,0,0,0},
+			{0,0,0,0,2,0,2,0,0,0,0},
+			{0,0,0,9,9,9,9,9,0,0,0},
+			{0,0,0,9,9,9,9,9,0,0,0},
+			{0,0,9,9,1,9,1,9,9,0,0},
+			{0,0,9,9,1,9,1,9,9,0,0},
+			{0,9,9,9,9,9,9,9,9,9,0},
+			{0,9,9,9,9,9,9,9,9,9,0},
+			{0,9,0,9,9,9,9,9,0,9,0},
+			{0,9,0,9,0,0,0,9,0,9,0},
+			{0,9,0,9,0,0,0,9,0,9,0},
+			{0,0,0,0,9,0,9,0,0,0,0},
+			{0,0,0,0,9,0,9,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0}
+			};
+	int ladrillos5 = 224;
 	public void init(){
 		
 		setSize(ANCHO_PANTALLA, ALTO_PANTALLA);
-		int i = 0;
-		int j = 0;
 		GOver = new GLabel("Game Over");
 		ganar = new GLabel("Enhorabuena, has ganado");
 		Modo1 = new GLabel("Modo Normal");
@@ -154,6 +219,7 @@ public class Arkanoid extends GraphicsProgram{
 		while(gameOver == false){
 			if(level == 1 && pausado == false){
 				niveles(nivel1);
+				ladrillosNivel = ladrillos1;
 			}
 			if(level == 2 && pausado == false){
 				niveles(nivel2);
@@ -161,11 +227,39 @@ public class Arkanoid extends GraphicsProgram{
 				pausado = true;
 				pausa = false;
 				nivelTerminado = false;
+				ladrillosNivel = ladrillos2;
+				cuentaLadrillos = 0;
 			}
-			if(level == 3){
-				ganador = true;
-				gameOver = true;
+			if(level == 3 && pausado == false){
+				niveles(nivel3);
+				inicio = false;
+				pausado = true;
+				pausa = false;
+				nivelTerminado = false;
+				ladrillosNivel = ladrillos3;
+				cuentaLadrillos = 0;
+			}
+			if(level == 4 && pausado == false){
+				niveles(nivel4);
+				inicio = false;
+				pausado = true;
+				pausa = false;
+				nivelTerminado = false;
+				ladrillosNivel = ladrillos4;
+				cuentaLadrillos = 0;
+			}
+			if(level == 5 && pausado == false){
+				niveles(nivel5);
+				inicio = false;
+				pausado = true;
+				pausa = false;
+				nivelTerminado = false;
+				ladrillosNivel = ladrillos5;
+				cuentaLadrillos = 0;
+			}
+			if(level == 6 && pausado == false){
 				pausa = true;
+				gameOver = true;
 			}
 			while(pausa == false){
 				pausado = false;
@@ -183,7 +277,7 @@ public class Arkanoid extends GraphicsProgram{
 				}
 				RandomGenerator aleatorio = new RandomGenerator();
 				n = aleatorio.nextInt(100);
-				puntJuego = new GLabel(""+score+"");
+				puntJuego = new GLabel(""+score);
 				puntJuego.setLocation(0, 800);
 				add(puntJuego);
 				choqueDoble = false;
@@ -305,13 +399,7 @@ public class Arkanoid extends GraphicsProgram{
 						velocidadY = velocidadY - 2;
 					}
 				}
-				if(cuentaLadrillos == 55 && nivelTerminado == false && level == 2){
-					level++;
-					pausa = true;
-					bola.setLocation(plataforma.getX() + (plataforma.getWidth()/2) - 7, plataforma.getY() - 15);
-					nivelTerminado = true;
-				}
-				if(cuentaLadrillos == 54 && nivelTerminado == false && level == 1){
+				if(cuentaLadrillos == ladrillosNivel && nivelTerminado == false){
 					level++;
 					pausa = true;
 					bola.setLocation(plataforma.getX() + (plataforma.getWidth()/2) - 7, plataforma.getY() - 15);
@@ -358,6 +446,12 @@ public class Arkanoid extends GraphicsProgram{
 				}
 				if(matriz[i][j] == 4){
 					ladrillo.setFillColor(Color.BLUE);
+				}
+				if(matriz[i][j] == 5){
+					ladrillo.setFillColor(Color.WHITE);
+				}
+				if(matriz[i][j] == 6){
+					ladrillo.setFillColor(Color.MAGENTA);
 				}
 				if(matriz[i][j] == 9){
 					ladrillo.setFillColor(Color.LIGHT_GRAY);
