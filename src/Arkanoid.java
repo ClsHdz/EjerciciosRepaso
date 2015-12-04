@@ -82,7 +82,7 @@ public class Arkanoid extends GraphicsProgram{
 	};
 	int ladrillos2 = 66;
 	int nivel3 [][] = {
-			{3,3,3,3,3,3,3,3,3,3,3},							//118 ladrillos
+			{3,3,3,3,3,3,3,3,3,3,3},							//120 ladrillos
 			{0,0,0,0,0,0,0,0,0,0,0},
 			{5,5,5,9,9,9,9,9,9,9,9},
 			{0,0,0,0,0,0,0,0,0,0,0},
@@ -98,7 +98,7 @@ public class Arkanoid extends GraphicsProgram{
 			{0,0,0,0,0,0,0,0,0,0,0},
 			{9,9,9,9,9,9,9,9,4,4,4}
 	};
-	int ladrillos3 = 118;
+	int ladrillos3 = 120;
 	int nivel4 [][] = {
 			{0,0,0,0,0,0,0,0,0,0,0},							//126 ladrillos
 			{0,9,2,3,6,0,2,3,4,9,0},
