@@ -26,8 +26,8 @@ public class Arkanoid extends GraphicsProgram{
 	int columnas = 11;
 	int filas = 15;
 	GOval bola = new GOval(15,15);
-	int velocidadX = 1;
-	int velocidadY = 2;
+	int velocidadX = 4;
+	int velocidadY = 8;
 	int cuentaLadrillos = 0;
 	int ladrillosNivel = 0;
 	int score = 0;
