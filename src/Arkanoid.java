@@ -21,8 +21,6 @@ public class Arkanoid extends GraphicsProgram{
 	GRect plataforma = new GRect(80, 30);
 	GRect botonModo1 = new GRect(80, 60);
 	GRect botonModo2 = new GRect(80, 60);
-	GRect ladrilloIrrompible;
-	int e [][] = {{1,1,1},{1,1,1},{1,1,1}};
 	int longLadrillo = 60;
 	int altLadrillo = 30;
 	int columnas = 11;
@@ -33,7 +31,6 @@ public class Arkanoid extends GraphicsProgram{
 	int cuentaLadrillos = 0;
 	int ladrillosNivel = 0;
 	int score = 0;
-	int n;
 	int level = 1;
 	boolean pausado = false;
 	boolean pausa = false;
@@ -41,10 +38,6 @@ public class Arkanoid extends GraphicsProgram{
 	boolean choquePlataforma = false;
 	boolean choqueLadrillo = false;
 	boolean ladrilloRoto = false;
-	boolean choqueUpLeft = false;
-	boolean choqueUpRight = false;
-	boolean choqueDownLeft = false;
-	boolean choqueDownRight = false;
 	boolean gameOver = true;
 	boolean ganador = false;
 	boolean inicio = false;
@@ -233,17 +226,12 @@ public class Arkanoid extends GraphicsProgram{
 					velocidadY = -2;
 				}
 				RandomGenerator aleatorio = new RandomGenerator();
-				n = aleatorio.nextInt(100);
 				puntJuego = new GLabel(""+score);
 				puntJuego.setLocation(0, 800);
 				add(puntJuego);
 				choqueDoble = false;
 				choquePlataforma = false;
 				choqueLadrillo = false;
-				choqueUpLeft = false;
-				choqueUpRight = false;
-				choqueDownLeft = false;
-				choqueDownRight = false;
 				if(inicio == false){
 					bola.setLocation(plataforma.getX() + (plataforma.getWidth()/2) - 7, plataforma.getY() - 15);
 				}
@@ -265,7 +253,6 @@ public class Arkanoid extends GraphicsProgram{
 					remove(choque);
 					cuentaLadrillos++;
 					score = score + 100;
-					choqueUpLeft = true;
 
 					if(posX >= choque.getX() + ladrillo.getWidth() -1 && posY >= choque.getY() +2 && posY <= choque.getY() + choque.getHeight() -2){
 						velocidadX = velocidadX * -1;
@@ -287,7 +274,6 @@ public class Arkanoid extends GraphicsProgram{
 						remove(choque);
 						cuentaLadrillos++;
 						score = score + 100;
-						choqueDownLeft = true;
 
 						if(posX >= choque.getX() + ladrillo.getWidth() -1 && posY >= choque.getY() +2 && posY <= choque.getY() + choque.getHeight() -2){
 							velocidadX = velocidadX * -1;
@@ -304,7 +290,6 @@ public class Arkanoid extends GraphicsProgram{
 					remove(choque);
 					cuentaLadrillos++;
 					score = score + 100;
-					choqueUpRight = true;
 
 					if(posX <= choque.getX() + 1 && posY >= choque.getY() +2 && posY <= choque.getY() + choque.getHeight() -2){
 						velocidadX = velocidadX * -1;
@@ -327,7 +312,6 @@ public class Arkanoid extends GraphicsProgram{
 						remove(choque);
 						cuentaLadrillos++;
 						score = score + 100;
-						choqueDownRight = true;
 						if(posX <= choque.getX() + 1 && posY >= choque.getY() +2 && posY <= choque.getY() + choque.getHeight() -2){
 							velocidadX = velocidadX * -1;
 						}
@@ -376,8 +360,6 @@ public class Arkanoid extends GraphicsProgram{
 		int j = 0;
 		while(i < filas){
 			while(j < columnas){
-				ladrilloIrrompible = new GRect(longLadrillo,altLadrillo);
-				ladrilloIrrompible.setFilled(true);
 				dobleLadrillo = new GRect(longLadrillo,altLadrillo);
 				dobleLadrillo.setFilled(true);
 				dobleLadrillo.setFillColor(Color.GRAY);
@@ -401,9 +383,6 @@ public class Arkanoid extends GraphicsProgram{
 				if(matriz[i][j] == 6){
 					ladrillo.setFillColor(Color.MAGENTA);
 				}
-				if(matriz[i][j] == 8){
-					ladrilloIrrompible.setFillColor(Color.BLACK);
-				}
 				if(matriz[i][j] == 9){
 					ladrillo.setFillColor(Color.LIGHT_GRAY);
 				}
@@ -412,9 +391,6 @@ public class Arkanoid extends GraphicsProgram{
 				}
 				if(matriz[i][j] == 9){
 					add(dobleLadrillo,longLadrillo * j,altLadrillo * i + 50);	
-				}
-				if(matriz[i][j] == 8){
-					add(ladrilloIrrompible,longLadrillo * j,altLadrillo * i + 50);
 				}
 				j++;
 			}
