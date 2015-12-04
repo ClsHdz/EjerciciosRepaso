@@ -1,3 +1,10 @@
+/*Autor: Carlos Hernández.
+ * 
+ * Este programa ejecuta una versión del juego "Arkanoid" con 6 niveles,
+ * un botón de pausa y algunos códigos para terminar el juego.
+ * 
+ * 
+ */
 import acm.program.*;
 import acm.util.RandomGenerator;
 
@@ -45,7 +52,7 @@ public class Arkanoid extends GraphicsProgram{
 	boolean modo1 = false;
 	boolean modo2 = false;
 	boolean nivelTerminado = false;
-	int nivel1 [][] = {
+	int nivel1 [][] = {											//Los niveles están definidos en matrices para mayor facilidad.
 			{1,1,1,1,1,1,1,1,1,1,1},							//61 ladrillos
 			{2,2,2,2,9,9,9,2,2,2,2},
 			{3,3,3,3,9,9,9,3,3,3,3},
@@ -62,7 +69,7 @@ public class Arkanoid extends GraphicsProgram{
 			{0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0}
 	};
-	int ladrillos1 = 61;
+	int ladrillos1 = 61;										//Además cada nivel tiene el número de ladrillos que contiene para así poder saber cuando ha terminado cada nivel.
 	int nivel2 [][] = {
 			{1,0,0,0,0,0,0,0,0,0,0},							//66 ladrillos
 			{2,2,0,0,0,0,0,0,0,0,0},
@@ -156,9 +163,9 @@ public class Arkanoid extends GraphicsProgram{
 	}
 
 	public void run(){
-		while(modo == false){
+		while(modo == false){										//Este while vacío está para que no haga nada antes de que elijas un modo.
 		}
-		if(modo1 == true){
+		if(modo1 == true){											//El modo invisible funciona al no añadir la bola aquí.
 			add(bola, 600, 0);
 		}
 		remove(botonModo1);
@@ -167,7 +174,7 @@ public class Arkanoid extends GraphicsProgram{
 		remove(Modo2);
 		gameOver = false;
 		while(gameOver == false){
-			if(level == 1 && pausado == false){
+			if(level == 1 && pausado == false){						//Añade los niveles según por cual estés.
 				niveles(nivel1);
 				ladrillosNivel = ladrillos1;
 			}
@@ -211,7 +218,7 @@ public class Arkanoid extends GraphicsProgram{
 				pausa = true;
 				gameOver = true;
 			}
-			while(pausa == false){
+			while(pausa == false){											//Este while está para poder pausar el juego.
 				pausado = false;
 				if(velocidadX > 1){
 					velocidadX = 1;
@@ -226,20 +233,20 @@ public class Arkanoid extends GraphicsProgram{
 					velocidadY = -2;
 				}
 				RandomGenerator aleatorio = new RandomGenerator();
-				puntJuego = new GLabel(""+score);
+				puntJuego = new GLabel(""+score);							//Añade la puntación. Está dentro del juego para que se vaya actualizando.
 				puntJuego.setLocation(0, 800);
 				add(puntJuego);
 				choqueDoble = false;
 				choquePlataforma = false;
 				choqueLadrillo = false;
-				if(inicio == false){
+				if(inicio == false){										//Inicio hace que no empiece a moverse la bola hasa que hagas click, y para que al mismo tiempo ponga la bola donde esté la plataforma.
 					bola.setLocation(plataforma.getX() + (plataforma.getWidth()/2) - 7, plataforma.getY() - 15);
 				}
 				else{
 					bola.move(velocidadX, -velocidadY);
 				}
 				pause(5);
-				if(bola.getX() + 25 > ANCHO_PANTALLA){
+				if(bola.getX() + 25 > ANCHO_PANTALLA){						//Esto sirve ara que bote en las paredes.
 					velocidadX = velocidadX * -1;
 				}
 				if(bola.getX() < 0){
@@ -249,7 +256,7 @@ public class Arkanoid extends GraphicsProgram{
 				double posX = bola.getX();
 				double posY = bola.getY();
 				choque = getElementAt(posX,posY);
-				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
+				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){			//Para comprobar los choques. Están ordenados por los puntos de la bola.
 					remove(choque);
 					cuentaLadrillos++;
 					score = score + 100;
@@ -322,14 +329,14 @@ public class Arkanoid extends GraphicsProgram{
 
 					}
 				}
-				if(bola.getY() < 0){
+				if(bola.getY() < 0){ 									//Interacciones con el techo y suelo.
 					velocidadY = velocidadY * -1;
 				}
 				if(bola.getY() + 15 > ALTO_PANTALLA){
 					gameOver = true;
 					pausa = true;
 				}
-				if(cuentaLadrillos == ladrillosNivel && nivelTerminado == false){
+				if(cuentaLadrillos == ladrillosNivel && nivelTerminado == false){   //Este if sirve para saber cuando has terminado el nivel.
 					level++;
 					pausa = true;
 					bola.setLocation(plataforma.getX() + (plataforma.getWidth()/2) - 7, plataforma.getY() - 15);
@@ -355,7 +362,7 @@ public class Arkanoid extends GraphicsProgram{
 			add(ganar);
 		}
 	}
-	private void niveles(int[][] matriz){
+	private void niveles(int[][] matriz){									//El método "niveles" añade los ladrillos de cada nivel según la matriz.
 		int i = 0;
 		int j = 0;
 		while(i < filas){
@@ -398,10 +405,10 @@ public class Arkanoid extends GraphicsProgram{
 			j = 0;
 		}
 	}
-	public void mouseMoved(MouseEvent evento){
+	public void mouseMoved(MouseEvent evento){									//El método para mover la plataforma.
 		plataforma.setLocation(evento.getX(), 700);
 	}
-	public void mouseClicked(MouseEvent evento){
+	public void mouseClicked(MouseEvent evento){								//El método para elegir modo, empezar el juego y salir de la pausa.
 		if(gameOver == false){
 			inicio = true;
 		}
@@ -418,7 +425,7 @@ public class Arkanoid extends GraphicsProgram{
 			pausado = true;
 		}
 	}
-	public void keyPressed (KeyEvent eventos){
+	public void keyPressed (KeyEvent eventos){									//El método para pausar, terminar el juego, y añadirte puntos.
 		if(eventos.getKeyCode() == KeyEvent.VK_9){
 			ganador = true;
 			gameOver = true;
