@@ -23,9 +23,10 @@ public class Arkanoid extends GraphicsProgram{
 	GLabel Modo2;
 	GLabel puntuacion;
 	GLabel puntJuego;
-	GRect dobleLadrillo;
-	GRect ladrillo;
-	GRect plataforma = new GRect(80, 30);
+	GImage background;
+	GImage dobleLadrillo;
+	GImage ladrillo;
+	GImage plataforma = new GImage("65938.png");
 	GRect botonModo1 = new GRect(80, 60);
 	GRect botonModo2 = new GRect(80, 60);
 	int longLadrillo = 60;
@@ -143,16 +144,17 @@ public class Arkanoid extends GraphicsProgram{
 	};
 	int ladrillos5 = 124;
 	public void init(){
-
+		plataforma.setSize(80, 30);
 		setSize(ANCHO_PANTALLA, ALTO_PANTALLA);
 		GOver = new GLabel("Game Over");
 		ganar = new GLabel("Enhorabuena, has ganado");
 		Modo1 = new GLabel("Modo Normal");
 		Modo2 = new GLabel("Modo Invisible");
+		background = new GImage("hexagon_pattern.png");
+		background.setSize(ANCHO_PANTALLA, ALTO_PANTALLA);
+		add(background);
 		addKeyListeners();
 		addMouseListeners();
-		plataforma.setFilled(true);
-		plataforma.setFillColor(Color.BLACK);
 		add(plataforma,0,700);
 		bola.setFilled(true);
 		bola.setFillColor(Color.CYAN);
@@ -256,7 +258,7 @@ public class Arkanoid extends GraphicsProgram{
 				double posX = bola.getX();
 				double posY = bola.getY();
 				choque = getElementAt(posX,posY);
-				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){			//Para comprobar los choques. Están ordenados por los puntos de la bola.
+				if(choque != null && choque != bola && choque != plataforma && choque != background && choqueLadrillo == false){			//Para comprobar los choques. Están ordenados por los puntos de la bola.
 					remove(choque);
 					cuentaLadrillos++;
 					score = score + 100;
@@ -277,7 +279,7 @@ public class Arkanoid extends GraphicsProgram{
 					choquePlataforma = true;
 				}
 				else{
-					if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
+					if(choque != null && choque != bola && choque != plataforma && choque != background && choqueLadrillo == false){
 						remove(choque);
 						cuentaLadrillos++;
 						score = score + 100;
@@ -293,7 +295,7 @@ public class Arkanoid extends GraphicsProgram{
 					}
 				}
 				choque = getElementAt(posX + bola.getWidth(),posY);
-				if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
+				if(choque != null && choque != bola && choque != plataforma && choque != background && choqueLadrillo == false){
 					remove(choque);
 					cuentaLadrillos++;
 					score = score + 100;
@@ -315,7 +317,7 @@ public class Arkanoid extends GraphicsProgram{
 					choquePlataforma = true;
 				}
 				else{
-					if(choque != null && choque != bola && choque != plataforma && choqueLadrillo == false){
+					if(choque != null && choque != bola && choque != plataforma && choque != background && choqueLadrillo == false){
 						remove(choque);
 						cuentaLadrillos++;
 						score = score + 100;
@@ -367,32 +369,30 @@ public class Arkanoid extends GraphicsProgram{
 		int j = 0;
 		while(i < filas){
 			while(j < columnas){
-				dobleLadrillo = new GRect(longLadrillo,altLadrillo);
-				dobleLadrillo.setFilled(true);
-				dobleLadrillo.setFillColor(Color.GRAY);
-				ladrillo = new GRect(longLadrillo,altLadrillo);
-				ladrillo.setFilled(true);
+				dobleLadrillo = new GImage("Arkanoid_Brick_Silver.png");
+				dobleLadrillo.setSize(longLadrillo, altLadrillo);
 				if(matriz[i][j] == 1){
-					ladrillo.setFillColor(Color.RED);
+					ladrillo = new GImage("Arkanoid_Brick_Red.png");
 				}
 				if(matriz[i][j] == 2){
-					ladrillo.setFillColor(Color.YELLOW);
+					ladrillo = new GImage("Arkanoid_Brick_Yellow.png");
 				}
 				if(matriz[i][j] == 3){
-					ladrillo.setFillColor(Color.GREEN);
+					ladrillo = new GImage("Arkanoid_Brick_Green.png");
 				}
 				if(matriz[i][j] == 4){
-					ladrillo.setFillColor(Color.BLUE);
+					ladrillo = new GImage("Arkanoid_Brick_Blue.png");
 				}
 				if(matriz[i][j] == 5){
-					ladrillo.setFillColor(Color.WHITE);
+					ladrillo = new GImage("Arkanoid_Brick_Orange.png");
 				}
 				if(matriz[i][j] == 6){
-					ladrillo.setFillColor(Color.MAGENTA);
+					ladrillo = new GImage("Arkanoid_Brick_Violet.png");
 				}
 				if(matriz[i][j] == 9){
-					ladrillo.setFillColor(Color.LIGHT_GRAY);
+					ladrillo = new GImage("Arkanoid_Brick_White.png");
 				}
+				ladrillo.setSize(longLadrillo, altLadrillo);
 				if(matriz[i][j] != 0 && matriz[i][j] != 8){
 					add(ladrillo,longLadrillo * j,altLadrillo * i + 50);
 				}
